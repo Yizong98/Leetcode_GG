@@ -143,3 +143,118 @@ class Solution:
         if (final_value < -2**31 or final_value > 2**31-1):
             return 0
         return final_value
+
+#Accepted Answer
+class Solution:
+    def licenseKeyFormatting(self, S, K):
+        """
+        :type S: str
+        :type K: int
+        :rtype: str
+        """
+        separate = S.split("-")
+        s_with_no_dash = ""
+        for char in separate:
+            s_with_no_dash += char
+        new_str = ""
+        while(len(s_with_no_dash) >= K):
+            new_str = s_with_no_dash[-K:] + new_str
+            s_with_no_dash = s_with_no_dash[:len(s_with_no_dash)-K]
+            if (len(s_with_no_dash) > 0):
+                new_str = "-" + new_str
+        new_str = s_with_no_dash + new_str
+        new_str = new_str.upper()
+        return new_str
+#Accepted Answer
+class Solution:
+    def nextClosestTime(self, time):
+        """
+        :type time: str
+        :rtype: str
+        """
+        time_split = time.split(":")
+        whole_str = time_split[0] + time_split[1]
+        lower_limit_min = time_split[1]
+        hr_list = [int(i+j) for i in whole_str for j in whole_str if int(i+j) < 24]
+        min_list =  [int(i+j) for i in whole_str for j in whole_str if int(i+j) < 60]
+        bigger_hr = sorted(list(set(([i for i in hr_list if i >= int(time_split[0])]))))
+        smaller_hr = sorted(list(set([i for i in hr_list if i < int(time_split[0])])))
+        bigger_min = sorted(list(set([i for i in min_list if i > int(time_split[1])])))
+        smaller_min = sorted(list(set([i for i in min_list if i <= int(time_split[1])])))
+        return_val = ""
+        print(bigger_hr)
+        if bigger_hr:
+            if bigger_hr[0] == int(time_split[0]):
+                if bigger_min:
+                    return_val = str(bigger_hr[0]) + ":" + str(bigger_min[0])
+                elif len(bigger_hr) > 1:
+                    return_val = str(bigger_hr[1])+ ":" + str(min(min_list))
+                else:
+                    return_val = str(min(hr_list)) + ":" + str(min(min_list))
+            print(return_val)
+        else:
+            return_val = str(min(hr_list)) + ":" + str(min(min_list))
+        if return_val[1] == ":":
+            return_val = "0" + return_val
+        if return_val[-2] == ":":
+            return_val = return_val[:-1] + "0" + return_val[-1]
+        return return_val
+#Accepted Answer
+class Solution:
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if (len(prices) in [0,1]):
+            return 0
+        max_profit = 0
+        min_idx = 0
+        smallest = prices[0]
+        
+        for i in range(1,len(prices)):
+            if (prices[i] - prices[min_idx]> max_profit):
+                max_profit = prices[i] - prices[min_idx]
+            elif(prices[i] - prices[min_idx]<= 0):
+                min_idx = i
+        return max_profit
+#Accepted Answer
+class Solution:
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        maxProfit = 0;
+        for i in range(1,len(prices)): 
+            if (prices[i] - prices[i - 1] > 0):
+                maxProfit += prices[i] - prices[i - 1]  
+        return maxProfit;
+class Solution(object):
+    def nextClosestTime(self, time):
+        cur = 60 * int(time[:2]) + int(time[3:])
+        allowed = {int(x) for x in time if x != ':'}
+        while True:
+            cur = (cur + 1) % (24 * 60)
+            if all(digit in allowed
+                    for block in divmod(cur, 60)
+                    for digit in divmod(block, 10)):
+                return "{:02d}:{:02d}".format(*divmod(cur, 60))
+#Accepted Answer
+class Solution:
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        if n < 0:
+            x = 1/x
+            n = -n
+        if n == 0:
+            return 1
+        half = self.myPow(x,n//2)
+        if (n % 2 == 0):
+            return half * half
+        else:
+            return half*half*x
