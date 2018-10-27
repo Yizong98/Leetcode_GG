@@ -230,6 +230,7 @@ class Solution:
             if (prices[i] - prices[i - 1] > 0):
                 maxProfit += prices[i] - prices[i - 1]  
         return maxProfit;
+#Accepted Answer
 class Solution(object):
     def nextClosestTime(self, time):
         cur = 60 * int(time[:2]) + int(time[3:])
