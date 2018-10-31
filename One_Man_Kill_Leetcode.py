@@ -259,3 +259,29 @@ class Solution:
             return half * half
         else:
             return half*half*x
+
+#Accepted Answer
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        hash_roman = {}
+        Roman = ["I", "V", "X", "L","C", "D", "M"]
+        Number = [1,5,10,50,100,500,1000]
+        hash_roman = {Roman[i] : Number[i] for i in range(len(Roman))}
+        substract = {"I":["V","X"],"X":["L", "C"], "C":["D","M"]}
+        converted = 0
+        skip = False
+        for i in range(len(s)):
+            if skip:
+                skip = False
+                continue
+            if s[i] in substract.keys() and i + 1 < len(s):
+                if s[i+1] in substract[s[i]]:
+                    converted += (hash_roman[s[i+1]] - hash_roman[s[i]])
+                    skip = True
+                    continue
+            converted += hash_roman[s[i]]
+        return converted
