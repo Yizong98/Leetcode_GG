@@ -285,3 +285,17 @@ class Solution:
                     continue
             converted += hash_roman[s[i]]
         return converted
+
+#Accepted Answer
+# Write your MySQL query statement below
+SELECT NAME AS CUSTOMERS FROM Customers
+LEFT OUTER JOIN ORDERS
+ON CUSTOMERS.ID = ORDERS.CUSTOMERID
+WHERE ORDERS.ID IS NULL
+
+#Accepted Answer
+# Write your MySQL query statement below
+SELECT EMAIL FROM PERSON 
+GROUP BY EMAIL
+HAVING COUNT(*) > 1
+
