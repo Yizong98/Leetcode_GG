@@ -299,3 +299,79 @@ SELECT EMAIL FROM PERSON
 GROUP BY EMAIL
 HAVING COUNT(*) > 1
 
+#Accepted Answer
+class LRUCache:
+    class node:
+        val = 0
+        key = 0
+        prev = None
+        nextN = None
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.collection = {}
+        self.size = capacity
+        self.end = None
+        self.start = None
+        
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if (key in self.collection.keys()):
+            Node = self.collection[key]
+            self.remove(Node)
+            self.add(Node)
+            return Node.val
+        return -1
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: void
+        """
+        if (key in self.collection.keys()):
+            Node = self.collection[key]
+            Node.val = value
+            self.remove(Node)
+            self.add(Node)
+        else:
+            new_node = self.node()
+            new_node.prev = None
+            new_node.nextN = None
+            new_node.val = value
+            new_node.key = key
+            if (len(self.collection) == self.size):
+                self.collection.pop(self.end.key)
+                self.remove(self.end)
+                self.add(new_node)
+            else:
+                self.add(new_node)
+            print(len(self.collection), self.size)
+            self.collection[key] = new_node
+            
+    def remove(self,Node):
+        if (Node.prev != None):
+            Node.prev.nextN = Node.nextN
+        else:
+            self.start = Node.nextN
+        
+        if (Node.nextN != None):
+            Node.nextN.prev = Node.prev
+        else:
+            self.end = Node.prev
+            
+        
+    def add(self, Node):
+        Node.prev = None
+        Node.nextN = self.start
+        if (self.start != None):
+            self.start.prev = Node
+        self.start = Node
+        if (self.end == None):
+            self.end = self.start
+
