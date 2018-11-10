@@ -375,3 +375,186 @@ class LRUCache:
         if (self.end == None):
             self.end = self.start
 
+# Accepted
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if (s == None or len(s) == 0):
+            return 0
+        result = 0
+        k = 0
+        subset = set()
+        for i in range(len(s)):
+            char = s[i]
+            # if not in the subset, we add
+            if char not in subset:
+                subset.add(char)
+                result = max(result, len(subset))
+            else:
+                # if in the subset, we use the slow runner 
+                # to update
+                while(k < i):
+                    # if the elem at slow pointer equal, 
+                    # we increment slow by one
+                    if char == s[k]:
+                        k += 1
+                        break
+                    else:
+                        # if the elem not equal to
+                        # the current character
+                        # we remove the elem at slow pointer
+                        # update until k is one step below i 
+                        # or it is equal to the element at i
+                        subset.remove(s[k])
+                        k += 1
+        return result
+
+#Lyfx Hackerrank
+#separate child
+import copy
+def minmoves(arr):
+    if len(arr) == 0 or len(arr) == 1:
+        return 0
+    arr1 = copy.deepcopy(arr)
+    arr2 = copy.deepcopy(arr)
+    swaps1 = 0
+    swaps2 = 0
+    p1 = 0
+    p2 = 0
+    while(p2  < len(arr1)):
+        if arr1[p1] != 0:
+            if arr1[p2] == 0:
+                temp = arr1[p2]
+                arr1[p2] = arr1[p1]
+                arr1[p1] = temp
+                swaps1 += (p2 - p1)
+                p1 += 1
+        else:
+            if arr2[p2] == 1:
+                p1 = p2
+        p2 += 1
+    p1 = 0
+    p2 = 0
+    while(p2  < len(arr2)):
+        if arr2[p1] != 1:
+            if arr2[p2] == 1:
+                temp = arr2[p2]
+                arr2[p2] = arr2[p1]
+                arr2[p1] = temp
+                swaps2 += (p2 - p1)
+                p1 += 1
+        else:
+            if arr2[p2] == 0:
+                p1 = p2
+        p2 += 1
+    print(arr1, arr2)
+    print(swaps1, swaps2)
+    return min(swaps1, swaps2)
+
+#Lyfx Hackerrank
+# binary search
+
+def binary_Search(arrary, n, x):
+    low = 0
+    high = n-1
+    while(low <= high):
+        mid = int((low+high)/2)
+        if array[mid] <= x:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return h
+def counts(nums, maxes):
+    nums1 = sorted(nums)
+    countray = []
+    for maxi in maxes:
+        index = binary_Search(nums1, len(nums1), maxi)
+        countray.append(index+1)
+    return countray
+
+#Accepted Answer
+class MinStack:
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.min_elem = None
+        self.stack = []
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: void
+        """
+        if len(self.stack) == 0:
+            self.min_elem = x
+        else:
+            self.min_elem = min(self.min_elem, x)
+        self.stack.append(x)
+
+    def pop(self):
+        """
+        :rtype: void
+        """
+        self.stack.pop()
+        if len(self.stack) > 0:
+            self.min_elem = min(self.stack)
+        else:
+            self.min_elem = None
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1]
+        
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.min_elem
+        
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
