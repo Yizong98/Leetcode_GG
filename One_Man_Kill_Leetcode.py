@@ -809,6 +809,31 @@ class Solution:
                 word += (str(count) + s[start])
                 
         return word
+
+#Faster 
+
+class Solution:
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        ans = "1"
+        for i in range(1,n):
+            temp = ""
+            chars = list(ans)
+            j = 0
+            while (j < len(chars)):
+                count = 1
+                while ((j < (len(chars) - 1)) and (chars[j] == chars[j+1])):
+                    count += 1
+                    j+= 1
+                temp += (str(count))
+                temp += (chars[j])
+                j+=1
+            ans = temp
+        return ans
+        
 #Accepted
 class Solution:
     def generate(self, numRows):
@@ -897,6 +922,48 @@ class Solution:
         prev.next = l1 or l2
         return dummy.next
 
+#Accepted
+class Solution:
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        answer_stack = []
+        special = [4,9]
+        Translation_storage = {}
+        Translation_storage[1] = "I"
+        Translation_storage[5] = "V"
+        Translation_storage[10] = "X"
+        Translation_storage[50] = "L"
+        Translation_storage[100] = "C"
+        Translation_storage[500] = "D"
+        Translation_storage[1000] = "M"
+        tracker = 0
+        modulus = num % 10
+        while (num != 0):
+            temp = ""
+            if modulus in special:
+                temp += Translation_storage[10**tracker]
+                temp += Translation_storage[modulus*(10**tracker) + 10**tracker]
+            else:
+                if modulus >= 5:
+                    temp += Translation_storage[5*(10**tracker)]
+                    remainder = modulus - 5
+                    if (remainder != 0):
+                        for i in range(remainder):
+                            temp += Translation_storage[1*(10**tracker)] 
+                else:
+                    for i in range(modulus):
+                            temp += Translation_storage[1*(10**tracker)] 
+            answer_stack.append(temp)
+            num //= 10
+            modulus = num % 10
+            tracker += 1
+        result = ""
+        while (len(answer_stack) != 0):
+            result += answer_stack.pop()
+        return result
 
 
 
