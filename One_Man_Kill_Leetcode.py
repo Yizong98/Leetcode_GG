@@ -527,20 +527,375 @@ class MinStack:
 # param_3 = obj.top()
 # param_4 = obj.getMin()
 
+#Accepted
+class Solution:
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: void Do not return anything, modify nums1 in-place instead.
+        """
+        first = m -1
+        second = n -1
+        total = m + n -1
+        while (total >= 0):
+            if (second < 0 or (nums1[first] > nums2[second] and first >= 0)) :
+                nums1[total] = nums1[first]
+                total -= 1
+                first -= 1
+            else:
+                nums1[total] = nums2[second]
+                total -= 1
+                second -= 1
+
+#Accepted Answer
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s) == 0:
+            return ""
+        if len(s) ==1:
+            return s
+        
+        longStr = s[0]
+        for i in range(len(s)):
+            temp = self.find_palin(s,i,i)
+            if len(temp) > len(longStr):
+                longStr = temp
+            temp = self.find_palin(s,i,i+1)
+            if len(temp) > len(longStr):
+                longStr = temp
+        return longStr
+        
+        
+    def find_palin(self,s,first, second):
+        while (first >= 0 and second <= len(s)-1 and s[first] == s[second]):
+            first -= 1
+            second += 1
+
+        return s[first + 1 : second]
+#Accepted Answer version 1
+class Solution:
+    def titleToNumber(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        number = 0
+        expo = 0
+        for i in range(len(s)-1,-1,-1):
+            number += (26**expo)*(ord(s[i]) - ord('A') + 1)
+            expo += 1
+        return number
+#Accepted Answer version 2 forward
+class Solution:
+    def titleToNumber(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        number = 0
+        for i in range(len(s)):
+            number = number * 26 + (ord(s[i]) - ord('A') + 1)
+        return number
+
+#Accepted Answer
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        match = {}
+        match[")"] = "("
+        match["}"] = "{"
+        match["]"] = "["
+        stack = []
+        if len(s)== 0:
+            return True
+        if len(s) == 1:
+            return False
+        for letter in s:
+            stack.append(letter)
+            if letter in match.keys():
+                if len(stack) == 1 or stack[-2] != match[letter]:
+                    return False
+                stack.pop()
+                stack.pop()
+        if len(stack) != 0:
+            return False
+        return True
+#Accepted Answer
+class Solution:
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        length_bool = [False]*(len(s) + 1)
+        length_bool[0] = True
+        
+        for i in range(1,len(s)+1):
+            for j in range(i-1,-1,-1):
+                if length_bool[j] and s[j:i] in wordDict:
+                    length_bool[i] = True
+                    break
+        return length_bool[len(s)]
+
+#Accepted Answer
+class Solution:
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        result = ""
+        for i in digits:
+            result += str(i)
+        result = int(result) + 1 
+        final_str = [int(char) for char in str(result)]
+        return final_str
+
+#Accepted Answer: Version2
+class Solution:
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        for i in range(len(digits)):
+            if digits[~i] < 9:
+                digits[~i] += 1
+                return digits
+            digits[~i] = 0
+        return [1] + [0]*len(digits)
+
+#Answer
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        result = []
+        tree_stack = []
+        tree_stack.append(root)
+        while (len(tree_stack) != 0 and root != None):
+            temp = tree_stack.pop()
+            result.append(temp.val)
+            if temp.right != None:
+                tree_stack.append(temp.right)
+            if temp.left != None:
+                tree_stack.append(temp.left)
+        return result
+#Accepted Answer
+class Solution:
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        
+        if numRows == 1 or len(s) == 1:
+            return s
+        inter = numRows - 2
+        total_dimension = []
+        iteration = 0
+        last = numRows - 1
+        time = 0
+        if numRows == 2:
+            for i in range(len(s)):
+                if i < 2:
+                    total_dimension.append(s[i])
+                else:
+                    total_dimension[(i)%2] += s[i]
+            final_str = ""
+            for i in total_dimension:
+                final_str += i
+            return final_str
+            
+        for i in range(len(s)):
+            if iteration < numRows:
+                if time == 0:
+                    total_dimension.append(s[i])
+                else: 
+                    total_dimension[iteration] += s[i]
+                iteration += 1
+            elif iteration < numRows + inter:
+                iteration += 1
+                total_dimension[last-(iteration - numRows)] += s[i]
+                if iteration == numRows + inter:
+                    iteration = 0
+                    time += 1
+        final_str = ""
+        for i in total_dimension:
+            final_str += i
+        return final_str
+
+# Accepted Answer
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        result_pre = ""
+        end = 1
+        if len(strs) == 1:
+            return strs[0]
+        if len(strs) ==0 or "" in strs:
+            return result_pre
+        violation = False
+        while(True):
+            temp = strs[0][0:end]
+            for elem in strs:
+                if end >  len(elem)  or temp != elem[0:end]:
+                    violation = True
+                    break
+            if (violation):
+                break
+            end += 1 
+            result_pre = temp
+        return result_pre
 
 
 
+#Accepted Answer
+class Solution:
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        term = {}
+        for i in range(1, n+1):
+            if i == 1:
+                t = "1"
+            else:
+                t = self.helper(term[i-1])
+            term[i] = t
+        return term[n]
+        
+    def helper(self,s):
+        start = 0
+        end = 1
+        count = 1
+        word = ""
+        if len(s) == 1:
+            return "1" + s
+        while end < len(s):
+            if s[start] == s[end]:
+                count += 1
+            else:
+                word += (str(count) + s[start])
+                start = end
+                count = 1
+            end += 1
+            if end == len(s):
+                word += (str(count) + s[start])
+                
+        return word
+#Accepted
+class Solution:
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        triangle = [[1]]
+        if numRows == 0:
+            return []
+        if numRows == 1:
+            return triangle
+        for i in range(1, numRows):
+            temp = []
+            for j in range(i+1):
+                temp.append(self.getElem(j-1,triangle[i-1])+self.getElem(j,triangle[i-1]))
+            triangle.append(temp)
+        return triangle
+    def getElem(self,index,array):
+        if index<0 or index == len(array):
+            return 0
+        else:
+            return array[index]
 
+# Accepted
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
+class Solution:
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if l1 ==[] and l2 == []:
+            return []
+        elif l1 == []:
+            return l2
+        elif l2 == []:
+            return l1
+        result = []
+        temp = l1
+        while(temp != None and l2 != None):
+            if temp.val >= l2.val :
+                cache = l2.next
+                l2.next = temp
+                temp = l2
+                l2 = cache
+            result.append(temp.val)
+            temp = temp.next
+        while(temp != None):
+            result.append(temp.val)
+            temp = temp.next
+        while(l2 != None):
+            result.append(l2.val)
+            l2 = l2.next
+        return result
+# Fastest
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-
-
-
-
-
-
-
-
+class Solution:
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        dummy = ListNode(-1)
+        prev = dummy
+        while l1 and l2:
+            if l1.val <= l2.val:
+                prev.next = l1
+                l1 = l1.next
+            else:
+                prev.next = l2
+                l2 = l2.next
+            prev = prev.next
+        prev.next = l1 or l2
+        return dummy.next
 
 
 
