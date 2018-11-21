@@ -993,6 +993,61 @@ class Solution:
             if curr.right != None:
                 BFS_queue.put(curr.right) 
         return root
+#Accepted
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if len(nums)==0:
+            return 0
+        total = len(nums)
+        for i in range(len(nums)-1,-1,-1):
+            if (nums[i] == val):
+                total -= 1
+            else:
+                for j in range(0,i):
+                    if (nums[j] == val):
+                        temp = nums[j]
+                        nums[j] = nums[i]
+                        nums[i] = temp
+                        total -= 1
+                        break
+        return total
+#Fastest
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if len(nums)==0:
+            return 0
+        pointer1 = 0
+        for pointer2 in range(len(nums)):
+            if nums[pointer2] != val:
+                nums[pointer1] = nums[pointer2]
+                pointer1 += 1
+        return pointer1
+
+#Accepted
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        i = 1
+        for j in range(1,len(nums)):
+            if nums[i-1] != nums[j]:
+                nums[i] = nums[j]
+                i += 1
+        return i
 
 
 
