@@ -833,7 +833,7 @@ class Solution:
                 j+=1
             ans = temp
         return ans
-        
+
 #Accepted
 class Solution:
     def generate(self, numRows):
@@ -965,6 +965,34 @@ class Solution:
             result += answer_stack.pop()
         return result
 
+#Accepted
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+import queue
+class Solution:
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if root == None:
+            return root
+        BFS_queue = queue.Queue(0)
+        BFS_queue.put(root)
+        while(not BFS_queue.empty()):
+            curr = BFS_queue.get()
+            temp = curr.left
+            curr.left = curr.right
+            curr.right = temp
+            if curr.left != None:
+                BFS_queue.put(curr.left)
+            if curr.right != None:
+                BFS_queue.put(curr.right) 
+        return root
 
 
 
