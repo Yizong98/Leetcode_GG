@@ -2078,6 +2078,55 @@ class Solution:
                 nums_dict[nums[i]] = i
         return False
 
+#Accepted
+class Solution:
+    def imageSmoother(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        def getIndex(idx_r,idx_c,row,column,M):
+            if idx_r < 0 or idx_c < 0 or idx_c >= column or idx_r >= row:
+                return -1
+            return M[idx_r][idx_c]
+        if len(M) == 0:
+            return None
+        rows = len(M)
+        columns = len(M[0])
+        if rows * columns == 1:
+            return M
+        smoother = [[0]*columns for r in range(rows)]
+        for i in range(rows):
+            for j in range(columns):
+                neighbours = []
+                for k in [i-1,i,i+1]:
+                    for q in [j-1,j,j+1]:
+                        temp = getIndex(k,q,rows,columns,M)
+                        if temp != -1:
+                            neighbours.append(temp)
+                smoother[i][j] = sum(neighbours) // len(neighbours)
+        return smoother
+
+#Simplified Faster
+class Solution:
+    def imageSmoother(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        row, columns = len(M), len(M[0])
+        final = [[0]*columns for c in range(row)]
+        for r in range(row):
+            for c in range(columns):
+                count = 0
+                for rp in [r-1,r,r+1]:
+                    for cp in [c-1,c,c+1]:
+                        if 0 <= rp < row and 0 <= cp < columns:
+                            final[r][c] += M[rp][cp]
+                            count += 1
+                final[r][c] //= count
+        return final
+
 
 
 
