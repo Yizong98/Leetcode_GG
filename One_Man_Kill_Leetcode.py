@@ -2126,6 +2126,34 @@ class Solution:
                             count += 1
                 final[r][c] //= count
         return final
+#Accepted
+# 1. insert in linkedlist: set head.next to current.next, then set current.next to head; store head.next previously!!!!!
+# 2. always check whether the beginning of a linkedlist is bigger or equal to another linkedlist
+class Solution:
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head == None:
+            return head
+        sort = ListNode(head.val)
+        head = head.next
+        
+        while(head is not None):
+            temp = head.next
+            current = sort
+            if sort.val >= head.val:
+                head.next = sort
+                sort = head
+            else:
+                while(current.next is not None and current.next.val < head.val):
+                    current = current.next
+                head.next = current.next
+                current.next = head
+            head = temp 
+        return sort
+
 
 
 
