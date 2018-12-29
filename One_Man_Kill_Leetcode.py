@@ -2153,6 +2153,22 @@ class Solution:
                 current.next = head
             head = temp 
         return sort
+#Accepted No.739
+class Solution:
+    def dailyTemperatures(self, T):
+        """
+        :type T: List[int]
+        :rtype: List[int]
+        """
+        answer = [0]*len(T)
+        stack = []
+        for i in range(len(T)-1, -1, -1):
+            while stack and T[i] >= T[stack[-1]]:
+                stack.pop()
+            if stack:
+                answer[i] = stack[-1] - i
+            stack.append(i)
+        return answer
 
 
 
