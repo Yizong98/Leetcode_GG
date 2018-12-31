@@ -2169,6 +2169,73 @@ class Solution:
                 answer[i] = stack[-1] - i
             stack.append(i)
         return answer
+# Accepted No.409
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = []
+        count = 0
+        for i in range(len(s)):
+            if s[i] in stack:
+                stack.remove(s[i])
+                count += 2
+            else:
+                stack.append(s[i])
+        if stack:
+            count += 1
+        return count 
+# Accepted No.206
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return None
+        stack = []
+        mock_head = ListNode(-1)
+        while head:
+            stack.append(head)
+            head = head.next
+        current = mock_head
+        while stack:
+            current.next = stack.pop()
+            current = current.next
+        current.next = None
+        return mock_head.next
+
+# Optimized by change of pointers
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return None
+        prev = None
+        while head:
+            temp = head.next
+            head.next = prev
+            prev = head
+            head = temp
+        return prev
 
 
 
