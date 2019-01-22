@@ -2236,8 +2236,136 @@ class Solution:
             prev = head
             head = temp
         return prev
+#Accepted No.378
+class Solution:
+    def kthSmallest(self, matrix, k):
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        flat = []
+        for number in matrix:
+            flat += number
+        flat = sorted(flat)
+        return flat[k-1]
 
+#Accepted No.98
+# if you go right, update your minimum to the node value (and carry through whatever the nodes maximum was)
+# if you go left, update your maximum to the node value (and carry through whatever the nodes minimum was)
 
+class Solution:
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        def helper(node, min, max):
+            if node == None:
+                return True
+            if min != None and node.val <= min or max != None and node.val >= max:
+                return False
+            return helper(node.left, min, node.val) and helper(node.right, node.val, max)
+            
+        return helper(root, None, None)
+# My Version
+class Solution:
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        def helper(root,mini,maxi):
+            if not root:
+                return True
+            if (mini != None and mini >= root.val) or (maxi != None and maxi <= root.val):
+                return False
+            return helper(root.left,mini,root.val) and helper(root.right,root.val,maxi)
+        return helper(root,None,None)
+#Accepted No.112
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
+class Solution:
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        if not root:
+            return False
+        def helper(root,total,goal):
+            if not root:
+                return False
+            if not root.left and not root.right:
+                if total + root.val == goal:
+                    return True
+                return False
+            right = left = False
+            left = helper(root.left,total+root.val,goal)
+            right = helper(root.right,total+root.val,goal)
+            return left or right
+        return helper(root,0,sum)
+
+#Accepted No.111
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        import queue 
+        if not root:
+            return 0
+        q = queue.Queue() 
+        q.put((root,1))
+        while not q.empty():
+            current, count = q.get()
+            if not current.left and not current.right:
+                return count
+            if current.left:
+                q.put((current.left,count+1))
+            if current.right:
+                q.put((current.right,count+1))
+#Accepted No.125
+class Solution:
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+        i = 0
+        t = len(s)-1
+        while(i<=t):
+            while i < len(s) and not s[i].isalnum():
+                i += 1
+            while 0<=t and not s[t].isalnum():
+                t -= 1
+            if i >= t:
+                return True
+            if s[i].lower() == s[t].lower():
+                i += 1
+                t -= 1
+            else:
+                return False
+        return True
 
 
