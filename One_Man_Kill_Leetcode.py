@@ -2367,5 +2367,33 @@ class Solution:
             else:
                 return False
         return True
-
+#Accepted No.42      
+class Solution:
+    def trap(self, height: 'List[int]') -> 'int':
+        left = right = 0
+        i = 0
+        res = 0
+        while(i < len(height)-1):
+            left = i
+            while left < len(height) and height[left] == 0 :
+                left += 1
+            if left >= len(height):
+                break
+            right = left+1
+            cache = [height[left]]
+            while right < len(height) and height[right] < height[left]: 
+                cache.append(height[right])
+                right += 1
+            if right >= len(height):
+                if len(cache) > 1:
+                    height = [max(cache[1:])] + cache[1:]
+                    i = 0
+                    continue
+                else:
+                    break
+            if len(cache) > 1:
+                for k in range(1,len(cache)):
+                    res += (cache[0] - cache[k])
+            i = right
+        return res
 
