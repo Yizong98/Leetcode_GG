@@ -2396,4 +2396,147 @@ class Solution:
                     res += (cache[0] - cache[k])
             i = right
         return res
+#Accepted 191
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        count = 0
+        while n:
+            count += 1
+            n &= n-1
+        return count
+#Accepted 190
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        return int("{:032b}".format(n)[::-1],2)
+#Accepted 898
+class Solution(object):
+    def subarrayBitwiseORs(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        ans = set()
+        cur = {0}
+        for x in A:
+            cur = {x | y for y in cur} | {x}
+            ans |= cur
+        return len(ans)
+#Accepted 201
+class Solution(object):
+    def rangeBitwiseAnd(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        if m == n:
+            return m
+        l_check = m
+        r_check = n
+        l_c = 0
+        r_c = 0
+        while l_check:
+            l_c += 1
+            l_check >>= 1
+        while r_check:
+            r_c += 1
+            r_check >>= 1
+        if l_c != r_c:
+            return 0
+        else:
+            res = m
+            for i in range(m+1,n+1):
+                res &= i
+        return res
+#Best 201
+class Solution(object):
+    def rangeBitwiseAnd(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        while m < n: n &= n - 1
+        return n
+#Accepted 338
+class Solution(object):
+    def countBits(self, num):
+        """
+        :type num: int
+        :rtype: List[int]
+        """
+        def helper(di):
+            num_to_bits=[0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4]; 
+            res = 0
+            while di:
+                res += num_to_bits[di & 15]
+                di >>= 4
+            return res
+        res = []
+        for n in range(0,num+1):
+            res.append(helper(n))
+        return res
+#Accepted 717
+class Solution(object):
+    def isOneBitCharacter(self, bits):
+        """
+        :type bits: List[int]
+        :rtype: bool
+        """
+        bits_q = bits[:-1][::-1]
+        check = True
+        while bits_q:
+            curr = bits_q.pop()
+            if curr == 1 and check:
+                check =  False
+            elif curr in [1,0] and not check:
+                check = True
+        return check
+#Accepted 693
+class Solution(object):
+    def hasAlternatingBits(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        mask = 1
+        prev = n & mask
+        n >>= 1
+        while n:
+            if n & mask == prev:
+                return False
+            prev = n & mask
+            n >>= 1
+        return True
+#Accepted 200
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        def dfs_helper(grid,row,col):
+            if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]) or grid[row][col] == '0':
+                return
+            grid[row][col] = '0'
+            dfs_helper(grid,row-1,col)
+            dfs_helper(grid,row+1,col)
+            dfs_helper(grid,row,col-1)
+            dfs_helper(grid,row,col+1)
+            return
+        if grid == None or len(grid)==0:
+            return 0
+        res = 0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == '1':
+                    res += 1
+                    dfs_helper(grid,r,c)
+        return res
 
