@@ -2539,4 +2539,147 @@ class Solution(object):
                     res += 1
                     dfs_helper(grid,r,c)
         return res
+#Accepted 170
+class TwoSum(object):
 
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.unique = set()
+        self.dup = set()
+
+    def add(self, number):
+        """
+        Add the number to an internal data structure..
+        :type number: int
+        :rtype: void
+        """
+        if number in self.unique:
+            self.dup.add(number)
+        else:
+            self.unique.add(number)
+        
+
+    def find(self, value):
+        """
+        Find if there exists any pair of numbers which sum is equal to the value.
+        :type value: int
+        :rtype: bool
+        """
+        for n in self.unique:
+            temp = value - n
+            if temp == n:
+                if temp in self.dup:
+                    return True
+            else:
+                if temp in self.unique:
+                    return True
+        return False
+#Accepted 175
+# Write your MySQL query statement below
+SELECT FirstName, LastName, City, State FROM Person LEFT JOIN Address
+         ON Person.PersonId =Address. PersonId 
+#Accepted 160
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        p1 = headA
+        p2 = headB
+        
+        if p1 is None or p2 is None:
+            return None
+        while p1 is not p2:
+            p1 = headB if p1 is None else p1.next
+            p2 = headA if p2 is None else p2.next
+        return p1
+#Accepted 176
+# Write your MySQL query statement below
+SELECT IFNULL(
+(SELECT DISTINCT Salary FROM Employee
+ORDER BY Salary desc
+LIMIT 1,1),
+    NULL) AS SecondHighestSalary
+#Accepted 836
+class Solution(object):
+    def isRectangleOverlap(self, rec1, rec2):
+        """
+        :type rec1: List[int]
+        :type rec2: List[int]
+        :rtype: bool
+        """
+        one_y = sorted([rec1[1],rec1[3]])
+        one_min_y = one_y[0]
+        one_max_y = one_y[1]
+        one_x = sorted([rec1[0],rec1[2]])
+        one_min_x = one_x[0]
+        one_max_x = one_x[1]
+        two_y = sorted([rec2[1],rec2[3]])
+        two_min_y = two_y[0]
+        two_max_y = two_y[1]
+        two_x = sorted([rec2[0],rec2[2]])
+        two_min_x = two_x[0]
+        two_max_x = two_x[1]
+        
+        if two_min_y >= one_max_y or one_min_y >= two_max_y or two_min_x >= one_max_x or one_min_x >= two_max_x:
+            return False
+        return True
+#Accepted 167
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        def b_search(t,arr,curr):
+            l = 0
+            h = len(arr) - 1
+            while l<=h:
+                mid = (l + h)//2
+                if arr[mid] == t and mid != curr:
+                    return mid
+                elif arr[mid] > t:
+                    h = mid - 1
+                else:
+                    l = mid + 1
+            return None
+        for i in range(len(numbers)):
+            diff = target - numbers[i]
+            res = b_search(diff,numbers,i)
+            if res and res != i:
+                return [i+1,res+1]
+        return None
+#Accepted 198
+class Solution(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        if len(nums) <=2:
+            return max(nums)
+        cache = [0]*len(nums)
+        cache[0] = nums[0]
+        cache[1] = max(nums[1],nums[0])
+        for i in range(2,len(nums)):
+            cache[i] = max(nums[i]+cache[i-2],cache[i-1])
+        return cache[-1]
+#Accepted 196
+# Write your MySQL query statement below
+DELETE t1 FROM Person t1
+        INNER JOIN
+    Person t2 
+WHERE
+    t1.id > t2.id AND t1.Email = t2.Email;
